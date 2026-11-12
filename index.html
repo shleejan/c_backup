@@ -3,52 +3,60 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Comics Block Maker</title>
+<title>COMICS BLOCK MAKER</title>
 <style>
 :root{
-  --bg:#e9e9e7;
+  --bg:#ffffff;
   --card:#ffffff;
-  --sub:#f5f5f3;
+  --sub:#f4f4f4;
   --tx:#111111;
-  --mut:#525252;
+  --mut:#555555;
   --line:#111111;
-  --subline:#9e9e9e;
+  --subline:#888888;
   --acc:#111111;
   --acctx:#ffffff;
+  --gutter:#111111;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
   :root{
-    --bg:#141414;
-    --card:#1f1f1f;
-    --sub:#292929;
+    --bg:#161616;
+    --card:#202020;
+    --sub:#2a2a2a;
     --tx:#f2f2f2;
-    --mut:#a8a8a8;
-    --line:#d4d4d4;
-    --subline:#636363;
+    --mut:#a6a6a6;
+    --line:#e0e0e0;
+    --subline:#666666;
     --acc:#f2f2f2;
     --acctx:#111111;
+    --gutter:#000000;
     color-scheme:dark;
   }
 }
-*{box-sizing:border-box;border-radius:0!important}
+*{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.55 "Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
-.wrap{max-width:1400px;margin:0 auto;padding:16px}
-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--line)}
-h1{font-size:19px;font-weight:800;letter-spacing:-.02em;margin:0}
+.wrap{max-width:1400px;margin:0 auto;padding:18px}
+
+/* 신문 메인 타이틀 스타일 */
+header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:4px solid var(--line)}
+h1{font-size:30px;font-weight:900;letter-spacing:-.03em;line-height:1;margin:0;text-transform:uppercase}
 h2{font-size:13px;font-weight:800;letter-spacing:.02em;margin:0 0 10px;padding:2px 8px;background:var(--acc);color:var(--acctx);display:inline-block}
 
-/* 코믹스 직사각형 컷 프레임 */
-section,.det{background:var(--card);border:1.5px solid var(--line);box-shadow:3px 3px 0 var(--line);padding:14px;margin-bottom:14px}
+/* 코믹스 컷 그리드 & 컷 사이 검은 여백(거터) */
+.panels{display:flex;flex-direction:column;gap:12px;background:var(--gutter);border:2px solid var(--line);padding:12px}
+section,.det{background:var(--card);border:1.5px solid var(--line);padding:14px;margin:0}
+.work{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch}
+.pv-box{position:sticky;top:12px;align-self:start}
 
-button,select,input,textarea{font:inherit;font-size:13px;color:var(--tx);background:var(--card);border:1px solid var(--line);padding:5px 9px}
-button{cursor:pointer;font-weight:600;transition:background .1s,color .1s}
-button:hover{background:var(--sub)}
-button.on{background:var(--acc);border-color:var(--acc);color:var(--acctx)}
-button.on:hover{opacity:.88}
-input[type=text],textarea,select{width:100%}
-input:focus,textarea:focus,select:focus{outline:2px solid var(--line);outline-offset:-2px}
-textarea{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;height:76px;resize:vertical}
+/* 에디터 UI 컨트롤 (직각 평면 스타일, 미리보기 #pv 내부에는 영향 주지 않도록 분리) */
+.wrap button,.wrap select,.wrap input,.wrap textarea{font:inherit;font-size:13px;color:var(--tx);background:var(--card);border:1px solid var(--line);border-radius:0;padding:5px 9px}
+.wrap button{cursor:pointer;font-weight:600}
+.wrap button:hover{background:var(--sub)}
+.wrap button.on{background:var(--acc);border-color:var(--acc);color:var(--acctx)}
+.wrap button.on:hover{opacity:.88}
+.wrap input[type=text],.wrap textarea,.wrap select{width:100%}
+.wrap input:focus,.wrap textarea:focus,.wrap select:focus{outline:2px solid var(--line);outline-offset:-2px}
+.wrap textarea{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;height:76px;resize:vertical}
 .hint{font-size:12px;color:var(--mut)}
 .bar{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 
@@ -64,12 +72,10 @@ label.f{display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:60
 .sw.sel{outline:2px solid var(--line);outline-offset:1px}
 .sv,.hue{position:relative;touch-action:none;cursor:crosshair;border:1.5px solid var(--line)}
 .sv{height:112px}.hue{height:15px;margin-top:6px;background:linear-gradient(to right,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00)}
-.sv i,.hue i{position:absolute;width:11px;height:11px;border:2px solid #fff;box-shadow:0 0 0 1.5px #000;transform:translate(-50%,-50%);pointer-events:none}
+.sv i,.hue i{position:absolute;width:11px;height:11px;border:2px solid #fff;box-shadow:0 0 0 1.5px #000;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
 .hue i{top:50%}
 
-/* 좌측 편집 / 우측 스티키 미리보기 2단 워크스페이스 */
-.work{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
-.pv-box{position:sticky;top:14px}
+/* 블록 편집 & 미리보기 */
 .blk{border:1px solid var(--line);padding:8px;margin-bottom:8px;background:var(--sub)}
 .bt{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px}.bt select{width:auto;padding:3px 6px}
 .bt button{padding:3px 8px}.bt input[type=number]{width:62px;padding:3px 6px}
@@ -85,13 +91,13 @@ label.f{display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:60
 .det[open] summary:before{transform:rotate(90deg)}
 .det[open] summary{margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--subline)}
 
-@media(max-width:900px){.top-grid,.work{grid-template-columns:1fr}.pv-box{position:static}}
+@media(max-width:900px){.top-grid,.work{grid-template-columns:1fr}.pv-box{position:static}h1{font-size:24px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <h1>Comics Block Maker</h1>
+  <h1>COMICS BLOCK MAKER</h1>
   <div class="bar">
     <button type="button" id="exp">설정 내보내기 (.json)</button>
     <button type="button" id="impBtn">설정 불러오기 (.json)</button>
@@ -100,89 +106,90 @@ label.f{display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:60
   </div>
 </header>
 
-<!-- 1. 상단 캐릭터 설정 -->
-<section>
-  <div class="bar" style="justify-content:space-between;margin-bottom:8px">
-    <h2 style="margin:0">1. 캐릭터 설정</h2>
-    <div class="bar">
-      <input type="text" id="newName" placeholder="새 이름 / 바꿀 이름" style="width:150px">
-      <button type="button" id="add">추가</button>
-      <button type="button" id="ren">이름 변경</button>
-      <button type="button" id="del">삭제</button>
-    </div>
-  </div>
-  <!-- 캐릭터 이름배경+이름색 칩 목록 -->
-  <div class="c-chips" id="chips"></div>
-  <div class="top-grid">
-    <div>
-      <div class="grid">
-        <label class="f">나레이션 외곽선<span class="cf"><span class="sw" id="outS"></span><input type="text" id="outH" maxlength="7"></span></label>
-        <label class="f">나레이션 채우기<span class="cf"><span class="sw" id="fillS"></span><input type="text" id="fillH" maxlength="7"></span></label>
-        <label class="f">나레이션 글자색<span class="cf"><span class="sw" id="fontS"></span><input type="text" id="fontH" maxlength="7"></span></label>
-        <label class="f">이름표 배경색<span class="cf"><span class="sw" id="nbgS"></span><input type="text" id="nbgH" maxlength="7"></span></label>
-        <label class="f">이름표 글자색<span class="cf"><span class="sw" id="nfgS"></span><input type="text" id="nfgH" maxlength="7"></span></label>
-        <label class="f">외곽선 종류<select id="bs"><option value="solid">실선</option><option value="dashed">파선</option><option value="dotted">점선</option></select></label>
-      </div>
-      <div class="bar" style="margin-top:8px"><span class="hint" id="tgt"></span><span class="hint" id="cmsg" style="font-weight:700;color:var(--tx)"></span></div>
-    </div>
-    <div>
-      <div class="sv" id="sv"><i id="svc"></i></div>
-      <div class="hue" id="hue"><i id="huec"></i></div>
-    </div>
-  </div>
-</section>
-
-<!-- 2. 좌측 대사 편집 / 우측 미리보기 -->
-<div class="work">
+<div class="panels">
+  <!-- 1. 상단 캐릭터 설정 컷 -->
   <section>
     <div class="bar" style="justify-content:space-between;margin-bottom:8px">
-      <h2 style="margin:0">2. 블록 &amp; 이미지 편집</h2>
+      <h2 style="margin:0">1. 캐릭터 설정</h2>
       <div class="bar">
-        <button type="button" id="l1">1단</button>
-        <button type="button" id="l2" class="on">2단</button>
+        <input type="text" id="newName" placeholder="새 이름 / 바꿀 이름" style="width:150px">
+        <button type="button" id="add">추가</button>
+        <button type="button" id="ren">이름 변경</button>
+        <button type="button" id="del">삭제</button>
       </div>
     </div>
-    <div class="grid" style="margin-bottom:8px">
-      <label class="f">나레이션 크기(px)<input type="number" id="fn" min="8" max="40" step="1"></label>
-      <label class="f">대사 크기(px)<input type="number" id="fd" min="8" max="40" step="1"></label>
-      <label class="f">외곽선 두께(px)<input type="number" id="bw" min="0.3" max="4" step="0.1"></label>
-      <label class="f">모서리 둥글기(px)<input type="number" id="rad" min="0" max="30" step="1"></label>
-    </div>
-    <div class="drop" id="drop" tabindex="0">클릭 · 드래그 · Ctrl(⌘)+V 이미지 넣기<input type="file" id="file" accept="image/*" hidden></div>
-    <div class="bar" style="margin-bottom:8px">
-      <input type="text" id="imgurl" placeholder="또는 이미지 URL 주소 입력 (https://...)" style="flex:1;min-width:140px">
-      <button type="button" id="imgclr">이미지 비우기</button>
-      <span class="hint" id="imsg"></span>
-    </div>
-    <div id="blks"></div>
-    <div class="bar"><button type="button" id="addN">+ 나레이션</button><button type="button" id="addD">+ 대사</button></div>
-    <p class="hint" style="margin:6px 0 0">드래그 선택 후 B / I / A+ / A− (단축키 Ctrl·⌘+B/I) 적용 가능. 업로드 이미지는 가로 1000px 이하로 압축됩니다.</p>
-  </section>
-
-  <section class="pv-box">
-    <div class="bar" style="justify-content:space-between;margin-bottom:8px">
-      <h2 style="margin:0">3. 실시간 미리보기</h2>
-      <div class="bar">
-        <button type="button" id="cpTop" class="on">HTML 코드 바로 복사</button>
-        <button type="button" id="dk">다크 배경 테스트</button>
+    <div class="c-chips" id="chips"></div>
+    <div class="top-grid">
+      <div>
+        <div class="grid">
+          <label class="f">나레이션 외곽선<span class="cf"><span class="sw" id="outS"></span><input type="text" id="outH" maxlength="7"></span></label>
+          <label class="f">나레이션 채우기<span class="cf"><span class="sw" id="fillS"></span><input type="text" id="fillH" maxlength="7"></span></label>
+          <label class="f">나레이션 글자색<span class="cf"><span class="sw" id="fontS"></span><input type="text" id="fontH" maxlength="7"></span></label>
+          <label class="f">이름표 배경색<span class="cf"><span class="sw" id="nbgS"></span><input type="text" id="nbgH" maxlength="7"></span></label>
+          <label class="f">이름표 글자색<span class="cf"><span class="sw" id="nfgS"></span><input type="text" id="nfgH" maxlength="7"></span></label>
+          <label class="f">외곽선 종류<select id="bs"><option value="solid">실선</option><option value="dashed">파선</option><option value="dotted">점선</option></select></label>
+        </div>
+        <div class="bar" style="margin-top:8px"><span class="hint" id="tgt"></span><span class="hint" id="cmsg" style="font-weight:700;color:var(--tx)"></span></div>
+      </div>
+      <div>
+        <div class="sv" id="sv"><i id="svc"></i></div>
+        <div class="hue" id="hue"><i id="huec"></i></div>
       </div>
     </div>
-    <div id="pv"></div>
-    <div class="bar" style="margin-top:6px"><span class="hint">블록 우측 상단 스위치로 라이트/다크 전환 확인</span><span class="hint" id="msgTop" style="font-weight:700;color:var(--tx)"></span></div>
   </section>
-</div>
 
-<!-- 3. 접이식 티스토리 코드 & 스킨 연동 옵션 -->
-<details class="det" id="codeDet">
-  <summary>4. 티스토리 HTML 코드 보기 &amp; 스킨 다크모드 세부 설정 (클릭해서 펼치기)</summary>
-  <textarea id="code" readonly spellcheck="false" style="height:120px"></textarea>
-  <div class="bar" style="margin-top:6px"><button type="button" id="cp" class="on">코드 복사</button><span class="hint" id="msg"></span></div>
-  <div class="grid" style="margin-top:10px">
-    <label class="f">시작 모드<select id="mode"><option value="auto">스킨 따라가기 (스위치로 반전)</option><option value="light">항상 라이트로 시작</option><option value="dark">항상 다크로 시작</option></select></label>
-    <label class="f">[스킨 따라가기] 다크모드 스킨 선택자 (쉼표 구분)<input type="text" id="dsel"></label>
+  <!-- 2. 좌측 대사 편집 컷 / 우측 미리보기 컷 -->
+  <div class="work">
+    <section>
+      <div class="bar" style="justify-content:space-between;margin-bottom:8px">
+        <h2 style="margin:0">2. 블록 &amp; 이미지 편집</h2>
+        <div class="bar">
+          <button type="button" id="l1">1단</button>
+          <button type="button" id="l2" class="on">2단</button>
+        </div>
+      </div>
+      <div class="grid" style="margin-bottom:8px">
+        <label class="f">나레이션 크기(px)<input type="number" id="fn" min="8" max="40" step="1"></label>
+        <label class="f">대사 크기(px)<input type="number" id="fd" min="8" max="40" step="1"></label>
+        <label class="f">외곽선 두께(px)<input type="number" id="bw" min="0.3" max="4" step="0.1"></label>
+        <label class="f">모서리 둥글기(px)<input type="number" id="rad" min="0" max="30" step="1"></label>
+      </div>
+      <div class="drop" id="drop" tabindex="0">클릭 · 드래그 · Ctrl(⌘)+V 이미지 넣기<input type="file" id="file" accept="image/*" hidden></div>
+      <div class="bar" style="margin-bottom:8px">
+        <input type="text" id="imgurl" placeholder="또는 이미지 URL 주소 입력 (https://...)" style="flex:1;min-width:140px">
+        <button type="button" id="imgclr">이미지 비우기</button>
+        <span class="hint" id="imsg"></span>
+      </div>
+      <div id="blks"></div>
+      <div class="bar"><button type="button" id="addN">+ 나레이션</button><button type="button" id="addD">+ 대사</button></div>
+      <p class="hint" style="margin:6px 0 0">드래그 선택 후 B / I / A+ / A− (단축키 Ctrl·⌘+B/I) 적용 가능. 업로드 이미지는 가로 1000px 이하로 압축됩니다.</p>
+    </section>
+
+    <section class="pv-box">
+      <div class="bar" style="justify-content:space-between;margin-bottom:8px">
+        <h2 style="margin:0">3. 실시간 미리보기</h2>
+        <div class="bar">
+          <button type="button" id="cpTop" class="on">HTML 코드 바로 복사</button>
+          <button type="button" id="dk">다크 배경 테스트</button>
+        </div>
+      </div>
+      <div id="pv"></div>
+      <div class="bar" style="margin-top:6px"><span class="hint">블록 우측 상단 스위치로 라이트/다크 전환 확인</span><span class="hint" id="msgTop" style="font-weight:700;color:var(--tx)"></span></div>
+    </section>
   </div>
-  <label class="hint" style="display:block;margin-top:6px"><input type="checkbox" id="pref" style="width:auto"> [스킨 따라가기] 기기 OS 다크모드 설정도 따르기</label>
-</details>
+
+  <!-- 3. 접이식 티스토리 코드 & 스킨 연동 옵션 컷 -->
+  <details class="det" id="codeDet">
+    <summary>4. 티스토리 HTML 코드 보기 &amp; 스킨 다크모드 세부 설정 (클릭해서 펼치기)</summary>
+    <textarea id="code" readonly spellcheck="false" style="height:120px"></textarea>
+    <div class="bar" style="margin-top:6px"><button type="button" id="cp" class="on">코드 복사</button><span class="hint" id="msg"></span></div>
+    <div class="grid" style="margin-top:10px">
+      <label class="f">시작 모드<select id="mode"><option value="auto">스킨 따라가기 (스위치로 반전)</option><option value="light">항상 라이트로 시작</option><option value="dark">항상 다크로 시작</option></select></label>
+      <label class="f">[스킨 따라가기] 다크모드 스킨 선택자 (쉼표 구분)<input type="text" id="dsel"></label>
+    </div>
+    <label class="hint" style="display:block;margin-top:6px"><input type="checkbox" id="pref" style="width:auto"> [스킨 따라가기] 기기 OS 다크모드 설정도 따르기</label>
+  </details>
+</div>
 </div>
 
 <script>
@@ -291,7 +298,7 @@ document.addEventListener('dragover',e=>{e.preventDefault();$('drop').classList.
 document.addEventListener('dragleave',e=>{if(!e.relatedTarget)$('drop').classList.remove('over')});
 document.addEventListener('drop',e=>{e.preventDefault();$('drop').classList.remove('over');loadImg(e.dataTransfer.files[0])});
 
-/* 출력 코드 생성 (기존 티스토리 출력 스타일 그대로 유지) */
+/* 출력 코드 생성 (기존 티스토리 출력 스타일 및 기능 100% 동일 유지) */
 function nameScale(n){
   let w=0;
   for(const ch of n)w+=/\s/.test(ch)?.3:/[A-Z0-9]/.test(ch)?.7:/[a-z]/.test(ch)?.6:ch.charCodeAt(0)<128?.45:1;
